@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Registro.css";
 
 const Registro = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const Registro = () => {
   };
 
   return (
-    <div>
+    <div className="registro-container">
       <h1>Registro</h1>
       <form onSubmit={handleRegistro}>
         <div>
@@ -60,6 +61,8 @@ const Registro = () => {
           />
         </div>
         <button type="submit">Registrarse</button>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
     </div>
   );

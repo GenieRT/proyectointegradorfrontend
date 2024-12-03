@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/authSlice";
-
+import "../styles/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // Para almacenar el email del usuario
@@ -49,10 +49,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
           <label htmlFor="email">Correo electrónico</label>
           <input
             type="email"
@@ -62,7 +62,7 @@ const Login = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Contraseña</label>
           <input
             type="password"
@@ -72,9 +72,9 @@ const Login = () => {
             required
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit" disabled={loading}>
+        {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        <button type="submit" className="login-button" disabled={loading}>
           {loading ? "Cargando..." : "Iniciar Sesión"}
         </button>
       </form>
