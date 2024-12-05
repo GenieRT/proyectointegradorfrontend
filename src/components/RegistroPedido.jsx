@@ -45,7 +45,7 @@ const RegistrarPedido = () => {
   };
 
   const registrarPedidoAPI = () => {
-    const fecha = new Date().toISOString();
+    //const fecha = new Date().toISOString();
 
     if (productosSeleccionados.length === 0) {
       alert('Debe agregar al menos un producto antes de realizar el pedido.');
@@ -53,8 +53,6 @@ const RegistrarPedido = () => {
     }
 
     const pedido = {
-      fecha,
-      estado: 'Pendiente',
       productos: productosSeleccionados.map((p) => ({
         productoId: parseInt(p.productoId),
         presentacionId: parseInt(p.presentacionId),

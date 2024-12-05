@@ -25,6 +25,12 @@ function App() {
               <li>
                 <Link to="/registrarPedido">Registrar pedido</Link>
               </li>
+              <li>
+                <Link to="/registrarReserva">Registrar reserva por ahora porque no está terminado y solo te lleva a un pedido en especifico</Link>
+              </li>
+              <li>
+                <Link to="/productos">Productos sin filtro por tipo de Usuario</Link>
+              </li>
             </ul>
           </nav>
         </header>
@@ -33,6 +39,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/registrarPedido" element={<RegistrarPedido />} />
+            <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
+            <Route path="/productos" element={<ListaProductos />} />
           </Routes>
         </main>
       </div>
