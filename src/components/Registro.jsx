@@ -43,7 +43,7 @@ const Registro = () => {
       <h1>Registro</h1>
       <form onSubmit={handleRegistro}>
         <div>
-          <label>Email:</label>
+          <label>Correo electrónico:</label>
           <input
             type="email"
             value={email}

@@ -32,7 +32,9 @@ const Login = () => {
       }
 
       const data = await response.json(); // Respuesta del backend (esperamos un token y usuario)
-      dispatch(setToken(data.token)); // Guardar el token en el slice de Redux
+      //dispatch(setToken(data.token)); // Guardar el token en el slice de Redux
+      dispatch(setToken({ token: data.token, role: data.role }));
+
 
       setSuccessMessage("Inicio de sesión exitoso.");
       setError(null);
