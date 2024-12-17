@@ -10,6 +10,7 @@ import AprobarPedido from "./components/AprobarPedido";
 import Logout from "./components/Logout"; 
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
+import ProtectedRoute from "./components/ProtectedRoute"; 
 
 function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -78,64 +79,38 @@ function App() {
           </nav>
         </header>
         <main>
-          <Routes>
+        <Routes>
+            {/* Rutas públicas */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/registro" element={<Registro />} />
+
+            {/* Rutas protegidas para Cliente */}
+            <Route element={<ProtectedRoute allowedRoles={["Cliente"]} />}>
+              <Route path="/registrarPedido" element={<RegistrarPedido />} />
+              <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />}/>
+              <Route path="/productos" element={<ListaProductos />} />
+            </Route>
+
+            {/* Rutas protegidas para Empleado */}
+            <Route element={<ProtectedRoute allowedRoles={["Empleado"]} />}>
+              <Route path="/aprobarPedido" element={<AprobarPedido />} />
+              <Route path="/productos" element={<ListaProductos />} />
+            </Route>
+          </Routes>
+
+
+         {/*  <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/registrarPedido" element={<RegistrarPedido />} />
             <Route path="/aprobarPedido" element={<AprobarPedido />} />
             <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
             <Route path="/productos" element={<ListaProductos />} />
-          </Routes>
+          </Routes> */}
         </main>
       </div>
     </Router>
   );
-
-
-  /* return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <h1>Gestión de Pedidos ISUSA</h1>
-          <nav>
-            <ul style={{ display: "flex", gap: "10px", listStyle: "none" }}>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/registro">Registro</Link>
-              </li>
-              <li>
-                <Link to="/registrarPedido">Registrar pedido</Link>
-              </li>
-              <li>
-                <Link to="/aprobarPedido">Aprobar pedido</Link>
-              </li>
-              <li>
-                <Link to="/registrarReserva">Registrar reserva por ahora porque no está terminado y solo te lleva a un pedido en especifico</Link>
-              </li>
-              <li>
-                <Link to="/productos">Productos sin filtro por tipo de Usuario</Link>
-              </li>
-              <li>
-                <Logout />
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/registrarPedido" element={<RegistrarPedido />} />
-            <Route path="/aprobarPedido" element={<AprobarPedido />} />
-            <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
-            <Route path="/productos" element={<ListaProductos />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
-  );*/
 }
 
 export default App;
