@@ -7,7 +7,12 @@ const ProductosTabla = () => {
   const { productos } = useSelector((state) => state.productos);
 
   useEffect(() => {
-    fetch('http://localhost:5183/api/v1/Producto')
+    fetch('http://localhost:5183/api/v1/Producto', {
+      //method: "GET", //por defecto es get
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`, // Token JWT
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al obtener los productos');

@@ -11,10 +11,16 @@ const RegistroReserva = ({ pedidoId, clienteId }) => {
     const [chofer, setChofer] = useState('');
     const [lineasReservas, setLineasReservas] = useState([]);
   
+    const token = localStorage.getItem("token");
+
     // Fetch para obtener el pedido por ID y sus líneas
     useEffect(() => {
       if (pedidoId) {
-        fetch(`http://localhost:5183/api/v1/Pedido/${pedidoId}`)
+        fetch(`http://localhost:5183/api/v1/Pedido/${pedidoId}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        })
           .then((response) => response.json())
           .then((data) => {
             setPedido(data);
@@ -22,7 +28,7 @@ const RegistroReserva = ({ pedidoId, clienteId }) => {
             // Obtener los productos asociados a las líneas del pedido
             Promise.all(
               data.productos.map((linea) =>
-                fetch(`http://localhost:5183/api/v1/Producto/${linea.productoId}`)
+                fetch(`http://localhost:5183/api/v1/Producto/${linea.productoId}`) //nose si hay que agregar meter el token aca
                   .then((response) => response.json())
                   .then((producto) => ({
                     ...producto,

@@ -10,15 +10,26 @@ const RegistrarPedido = () => {
     cantidad: '',
   }); // Formulario para un nuevo producto
   const [clienteId] = useState(1); // Cliente ID (cambiarlo dinámicamente)
+  const token = localStorage.getItem("token");
 
   // Obtener productos y presentaciones al cargar el componente
   useEffect(() => {
-    fetch('http://localhost:5183/api/v1/Producto')
+    fetch('http://localhost:5183/api/v1/Producto', {
+     // method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener productos:', error));
 
-    fetch('http://localhost:5183/api/v1/Presentacion')
+    fetch('http://localhost:5183/api/v1/Presentacion', {
+     // method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setPresentaciones(data))
       .catch((error) => console.error('Error al obtener presentaciones:', error));
@@ -64,7 +75,10 @@ const RegistrarPedido = () => {
     fetch('http://localhost:5183/api/v1/Pedido', {
       method: 'POST',
       body: JSON.stringify(pedido),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`,
+      },
     })
       .then((response) => {
         if (response.ok) {
