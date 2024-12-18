@@ -5,12 +5,13 @@ import { setProductos } from '../features/productoSlice';
 const ProductosTabla = () => {
   const dispatch = useDispatch();
   const { productos } = useSelector((state) => state.productos);
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     fetch('http://localhost:5183/api/v1/Producto', {
       //method: "GET", //por defecto es get
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`, // Token JWT
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

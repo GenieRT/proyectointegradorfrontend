@@ -7,7 +7,8 @@ import Registro from "./components/Registro";
 import RegistroReserva from "./components/RegistroReserva";
 import ListaProductos from "./components/ListaProductos"
 import AprobarPedido from "./components/AprobarPedido";
-import Logout from "./components/Logout"; 
+import ListarPedidosYReservas from "./components/ListarPedidosYReservas";
+import ListarPedidosYReservasPorClienteE from "./components/ListarPedidosYReservasPorClienteE";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute"; 
@@ -52,7 +53,9 @@ function App() {
                   <li>
                     <Link to="/productos">Productos</Link>
                   </li>
-
+                  <li>
+                    <Link to="/listarPedidosReservasClienteE">Pedidos y Reservas por Cliente</Link>
+                  </li>   
                 </>
               )}
               {isAuthenticated && role === "Cliente" && (
@@ -65,6 +68,9 @@ function App() {
                   </li>
                   <li>
                     <Link to="/productos">Productos</Link>
+                  </li>
+                  <li>
+                    <Link to="/pedidosYReservas">Pedidos y Reservas</Link>
                   </li>
                 </>
               )}
@@ -84,29 +90,26 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
 
+            {/* Rutas compartidas para Cliente y Empleado */}
+            <Route element={<ProtectedRoute allowedRoles={["Cliente", "Empleado"]} />}>
+              <Route path="/productos" element={<ListaProductos />} />
+            </Route>
+
             {/* Rutas protegidas para Cliente */}
             <Route element={<ProtectedRoute allowedRoles={["Cliente"]} />}>
               <Route path="/registrarPedido" element={<RegistrarPedido />} />
               <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />}/>
-              <Route path="/productos" element={<ListaProductos />} />
+              {/* <Route path="/productos" element={<ListaProductos />} /> */}
+              <Route path="/pedidosYReservas" element={<ListarPedidosYReservas />} />
             </Route>
 
             {/* Rutas protegidas para Empleado */}
             <Route element={<ProtectedRoute allowedRoles={["Empleado"]} />}>
               <Route path="/aprobarPedido" element={<AprobarPedido />} />
-              <Route path="/productos" element={<ListaProductos />} />
+              {/* <Route path="/productos" element={<ListaProductos />} /> */}
+              <Route path="/listarPedidosReservasClienteE" element={<ListarPedidosYReservasPorClienteE />} />
             </Route>
           </Routes>
-
-
-         {/*  <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/registrarPedido" element={<RegistrarPedido />} />
-            <Route path="/aprobarPedido" element={<AprobarPedido />} />
-            <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
-            <Route path="/productos" element={<ListaProductos />} />
-          </Routes> */}
         </main>
       </div>
     </Router>
