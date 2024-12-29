@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/authSlice";
+import { Link } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -86,6 +87,10 @@ const Login = () => {
           {loading ? "Cargando..." : "Iniciar Sesión"}
         </button>
       </form>
+      <div className="register-link">
+        <p>¿No tienes una cuenta?</p>
+        <Link to="/registro">Regístrate aquí</Link>
+      </div>
     </div>
   );
 };

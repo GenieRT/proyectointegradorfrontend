@@ -12,6 +12,8 @@ import ListarPedidosYReservasPorClienteE from "./components/ListarPedidosYReserv
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute"; 
+import logo from './img/unnamed.png';
+
 
 function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -31,6 +33,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>Gestión de Pedidos ISUSA</h1>
+          <img src={logo} alt="Logo ISUSA" className="logo" />
           {/* Barra de navegación */}
           <nav>
             <ul style={{ display: "flex", gap: "10px", listStyle: "none" }}>

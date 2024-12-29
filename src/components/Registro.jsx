@@ -5,12 +5,20 @@ import "../styles/Registro.css";
 const Registro = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); 
   const navigate = useNavigate();
 
   const handleRegistro = (e) => {
     e.preventDefault();
+
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+        setErrorMessage("Las contraseñas no coinciden.");
+        setSuccessMessage("");
+        return;
+    }
 
     fetch("https://localhost:7218/api/Usuario/ActualizarContraseña", {
       method: "PUT",
@@ -29,7 +37,7 @@ const Registro = () => {
         console.log("Registro exitoso:", data);
         setSuccessMessage("Registro exitoso. Por favor, revise su correo para confirmar su contraseña.");
         setErrorMessage("");
-        //setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
+        setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -57,6 +65,15 @@ const Registro = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Confirmar Contraseña:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>

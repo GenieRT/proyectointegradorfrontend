@@ -55,3 +55,18 @@
     text-align: center;
   }
   
+  .register-link {
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-top: 10px; /* Agrega un espacio superior */
+  }
+  
+  .register-link a {
+    color: purple;
+    text-decoration: none; /* Opcional: quita el subrayado */
+    font-weight: bold; /* Opcional: da un estilo más resaltado */
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline; /* Opcional: subrayado al pasar el mouse */
+  }
+  
