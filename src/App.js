@@ -7,10 +7,17 @@ import Registro from "./components/Registro";
 import RegistroReserva from "./components/RegistroReserva";
 import ListaProductos from "./components/ListaProductos"
 import AprobarPedido from "./components/AprobarPedido";
-import Logout from "./components/Logout"; 
+import ListarPedidosYReservas from "./components/ListarPedidosYReservas";
+import ListarPedidosYReservasPorClienteE from "./components/ListarPedidosYReservasPorClienteE";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
+<<<<<<< HEAD
 import ReservasProximaSemana from "./components/ReservasProximaSemana";
+=======
+import ProtectedRoute from "./components/ProtectedRoute"; 
+import logo from './img/unnamed.png';
+
+>>>>>>> 6693aaae811aadf444498e31880e50be0b64dd2c
 
 function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -30,6 +37,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>Gestión de Pedidos ISUSA</h1>
+          <img src={logo} alt="Logo ISUSA" className="logo" />
           {/* Barra de navegación */}
           <nav>
             <ul style={{ display: "flex", gap: "10px", listStyle: "none" }}>
@@ -52,7 +60,9 @@ function App() {
                   <li>
                     <Link to="/productos">Productos</Link>
                   </li>
-
+                  <li>
+                    <Link to="/listarPedidosReservasClienteE">Pedidos y Reservas por Cliente</Link>
+                  </li>   
                 </>
               )}
               {isAuthenticated && role === "Cliente" && (
@@ -65,6 +75,9 @@ function App() {
                   </li>
                   <li>
                     <Link to="/productos">Productos</Link>
+                  </li>
+                  <li>
+                    <Link to="/pedidosYReservas">Pedidos y Reservas</Link>
                   </li>
                 </>
               )}
@@ -79,65 +92,43 @@ function App() {
           </nav>
         </header>
         <main>
-          <Routes>
+        <Routes>
+            {/* Rutas públicas */}
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
+<<<<<<< HEAD
             <Route path="/registrarPedido" element={<RegistrarPedido />} />
             <Route path="/aprobarPedido" element={<AprobarPedido />} />
             <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
             <Route path="/productos" element={<ListaProductos />} />
             <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
+=======
+
+            {/* Rutas compartidas para Cliente y Empleado */}
+            <Route element={<ProtectedRoute allowedRoles={["Cliente", "Empleado"]} />}>
+              <Route path="/productos" element={<ListaProductos />} />
+            </Route>
+
+            {/* Rutas protegidas para Cliente */}
+            <Route element={<ProtectedRoute allowedRoles={["Cliente"]} />}>
+              <Route path="/registrarPedido" element={<RegistrarPedido />} />
+              <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />}/>
+              {/* <Route path="/productos" element={<ListaProductos />} /> */}
+              <Route path="/pedidosYReservas" element={<ListarPedidosYReservas />} />
+            </Route>
+
+            {/* Rutas protegidas para Empleado */}
+            <Route element={<ProtectedRoute allowedRoles={["Empleado"]} />}>
+              <Route path="/aprobarPedido" element={<AprobarPedido />} />
+              {/* <Route path="/productos" element={<ListaProductos />} /> */}
+              <Route path="/listarPedidosReservasClienteE" element={<ListarPedidosYReservasPorClienteE />} />
+            </Route>
+>>>>>>> 6693aaae811aadf444498e31880e50be0b64dd2c
           </Routes>
         </main>
       </div>
     </Router>
   );
-
-
-  /* return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <h1>Gestión de Pedidos ISUSA</h1>
-          <nav>
-            <ul style={{ display: "flex", gap: "10px", listStyle: "none" }}>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/registro">Registro</Link>
-              </li>
-              <li>
-                <Link to="/registrarPedido">Registrar pedido</Link>
-              </li>
-              <li>
-                <Link to="/aprobarPedido">Aprobar pedido</Link>
-              </li>
-              <li>
-                <Link to="/registrarReserva">Registrar reserva por ahora porque no está terminado y solo te lleva a un pedido en especifico</Link>
-              </li>
-              <li>
-                <Link to="/productos">Productos sin filtro por tipo de Usuario</Link>
-              </li>
-              <li>
-                <Logout />
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/registrarPedido" element={<RegistrarPedido />} />
-            <Route path="/aprobarPedido" element={<AprobarPedido />} />
-            <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
-            <Route path="/productos" element={<ListaProductos />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
-  );*/
 }
 
 export default App;

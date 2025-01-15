@@ -30,3 +30,11 @@ nav ul li a {
 nav ul li a:hover {
   background-color: #ddd;
 }
+
+.logo {
+  position: absolute; /* Posición absoluta dentro del contenedor */
+  top: 10px; /* Espaciado desde arriba */
+  right: 10px; /* Espaciado desde la derecha */
+  width: 100px; /* Ajusta el tamaño según sea necesario */
+  height: auto; /* Mantén la proporción de la imagen */
+}

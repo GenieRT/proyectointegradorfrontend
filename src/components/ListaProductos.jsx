@@ -5,9 +5,15 @@ import { setProductos } from '../features/productoSlice';
 const ProductosTabla = () => {
   const dispatch = useDispatch();
   const { productos } = useSelector((state) => state.productos);
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    fetch('http://localhost:5183/api/v1/Producto')
+    fetch('http://localhost:5183/api/v1/Producto', {
+      //method: "GET", //por defecto es get
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al obtener los productos');

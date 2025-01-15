@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/authSlice";
+import { Link } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -33,8 +34,14 @@ const Login = () => {
 
       const data = await response.json(); // Respuesta del backend (esperamos un token y usuario)
       //dispatch(setToken(data.token)); // Guardar el token en el slice de Redux
-      dispatch(setToken({ token: data.token, role: data.role }));
-
+      //dispatch(setToken({ token: data.token, role: data.role }));
+      dispatch(
+        setToken({
+          token: data.token,
+          role: data.role,
+          clienteId: data.usuario.id,
+        })
+      );
 
       setSuccessMessage("Inicio de sesión exitoso.");
       setError(null);
@@ -80,6 +87,10 @@ const Login = () => {
           {loading ? "Cargando..." : "Iniciar Sesión"}
         </button>
       </form>
+      <div className="register-link">
+        <p>¿No tienes una cuenta?</p>
+        <Link to="/registro">Regístrate aquí</Link>
+      </div>
     </div>
   );
 };
