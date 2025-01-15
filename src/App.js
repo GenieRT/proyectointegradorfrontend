@@ -10,6 +10,7 @@ import AprobarPedido from "./components/AprobarPedido";
 import Logout from "./components/Logout"; 
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
+import ReservasProximaSemana from "./components/ReservasProximaSemana";
 
 function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -85,6 +86,7 @@ function App() {
             <Route path="/aprobarPedido" element={<AprobarPedido />} />
             <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
             <Route path="/productos" element={<ListaProductos />} />
+            <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
           </Routes>
         </main>
       </div>
