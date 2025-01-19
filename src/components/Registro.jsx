@@ -29,7 +29,9 @@ const Registro = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Error en el registro");
+          return response.json().then((error) => {
+            throw new Error(error.mensaje || "Error en el registro");
+        });
         }
         return response.json();
       })
@@ -40,7 +42,7 @@ const Registro = () => {
         setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Error:", error.message);
         setErrorMessage(error.message);
         setSuccessMessage("");
       });

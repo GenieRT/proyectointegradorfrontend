@@ -11,13 +11,10 @@ import ListarPedidosYReservas from "./components/ListarPedidosYReservas";
 import ListarPedidosYReservasPorClienteE from "./components/ListarPedidosYReservasPorClienteE";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
-<<<<<<< HEAD
 import ReservasProximaSemana from "./components/ReservasProximaSemana";
-=======
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import logo from './img/unnamed.png';
 
->>>>>>> 6693aaae811aadf444498e31880e50be0b64dd2c
 
 function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -63,6 +60,9 @@ function App() {
                   <li>
                     <Link to="/listarPedidosReservasClienteE">Pedidos y Reservas por Cliente</Link>
                   </li>   
+                  <li>
+                    <Link to="/reservasProxSemana">Reservas semana próxima</Link>
+                  </li> 
                 </>
               )}
               {isAuthenticated && role === "Cliente" && (
@@ -77,7 +77,7 @@ function App() {
                     <Link to="/productos">Productos</Link>
                   </li>
                   <li>
-                    <Link to="/pedidosYReservas">Pedidos y Reservas</Link>
+                    <Link to="/pedidosYReservas">Mis Pedidos y Reservas</Link>
                   </li>
                 </>
               )}
@@ -96,13 +96,11 @@ function App() {
             {/* Rutas públicas */}
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
-<<<<<<< HEAD
             <Route path="/registrarPedido" element={<RegistrarPedido />} />
             <Route path="/aprobarPedido" element={<AprobarPedido />} />
             <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
             <Route path="/productos" element={<ListaProductos />} />
             <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
-=======
 
             {/* Rutas compartidas para Cliente y Empleado */}
             <Route element={<ProtectedRoute allowedRoles={["Cliente", "Empleado"]} />}>
@@ -122,8 +120,8 @@ function App() {
               <Route path="/aprobarPedido" element={<AprobarPedido />} />
               {/* <Route path="/productos" element={<ListaProductos />} /> */}
               <Route path="/listarPedidosReservasClienteE" element={<ListarPedidosYReservasPorClienteE />} />
+              <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
             </Route>
->>>>>>> 6693aaae811aadf444498e31880e50be0b64dd2c
           </Routes>
         </main>
       </div>

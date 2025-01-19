@@ -37,7 +37,7 @@
   }
   
   button {
-    background-color: #007bff;
+    background-color: #28a745; /* Verde del logo de ISUSA */
     color: white;
     border: none;
     padding: 10px;
@@ -45,8 +45,14 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-  }
-  
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Transición suave para hover */
+}
+
+button:hover {
+    background-color: #218838; /* Un verde ligeramente más oscuro para el hover */
+}
+
   button:disabled {
     background-color: #cccccc;
   }

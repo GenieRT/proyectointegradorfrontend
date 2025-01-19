@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registarReservas} from '../features/reservaSlice';
+import { useLocation } from "react-router-dom";
 
-const RegistroReserva = ({ pedidoId, clienteId }) => {
+const RegistroReserva = (/* { pedidoId, clienteId } */) => {
     const dispatch = useDispatch();
     const [pedido, setPedido] = useState(null);
     const [productosDetalles, setProductosDetalles] = useState([]);
@@ -10,13 +11,19 @@ const RegistroReserva = ({ pedidoId, clienteId }) => {
     const [camion, setCamion] = useState('');
     const [chofer, setChofer] = useState('');
     const [lineasReservas, setLineasReservas] = useState([]);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const pedidoId = queryParams.get("pedidoId"); // Obtén el pedidoId de la URL
+    //let clienteId = queryParams.get("clienteId"); 
+    const clienteId = localStorage.getItem("clienteId"); //localStorage
+
   
     const token = localStorage.getItem("token");
 
     // Fetch para obtener el pedido por ID y sus líneas
     useEffect(() => {
       if (pedidoId) {
-        fetch(`http://localhost:5183/api/v1/Pedido/${pedidoId}`, {
+        fetch(`https://localhost:7218/api/v1/Pedido/${pedidoId}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
@@ -28,7 +35,11 @@ const RegistroReserva = ({ pedidoId, clienteId }) => {
             // Obtener los productos asociados a las líneas del pedido
             Promise.all(
               data.productos.map((linea) =>
-                fetch(`http://localhost:5183/api/v1/Producto/${linea.productoId}`) //nose si hay que agregar meter el token aca
+                fetch(`https://localhost:7218/api/v1/Producto/${linea.productoId}`, {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Agrega el token aquí
+              },
+            })
                   .then((response) => response.json())
                   .then((producto) => ({
                     ...producto,
@@ -59,10 +70,11 @@ const RegistroReserva = ({ pedidoId, clienteId }) => {
           lineasReservas,
         };
   
-        fetch('http://localhost:5183/api/v1/Reserva', {
+        fetch('https://localhost:7218/api/v1/Reserva', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`,
           },
           body: JSON.stringify(reserva),
         })
