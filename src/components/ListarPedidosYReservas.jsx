@@ -84,16 +84,36 @@ const ListarPedidosYReservas = () => {
                       <ul>
                         {pedido.productos.map((prod) => (
                           <li key={prod.id}>
-                            {prod.producto.descripcion} - {prod.cantidad}{" "}
-                            {prod.presentacion.unidad}
+                            {/* Validar que producto y presentacion no sean null */}
+                            {prod.producto
+                              ? prod.producto.descripcion
+                              : "Producto desconocido"}{" "}
+                            - {prod.cantidad}{" "}
+                            {prod.presentacion
+                              ? prod.presentacion.unidad
+                              : "Unidad desconocida"}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      "No hay productos"
+                      <span style={{ color: "gray", fontStyle: "italic" }}>No hay productos</span>
                     )}
                   </td>
                   <td>
+                  {pedido.reservas.length > 0 ? (
+                  <span
+                    style={{
+                      color: "green",
+                      fontWeight: "bold",
+                      padding: "5px 10px",
+                      backgroundColor: "#e6ffe6",
+                      borderRadius: "5px",
+                      display: "inline-block",
+                    }}
+                  >
+                    Pedido ya reservado
+                    </span>
+                  ) : (
                     <button
                       onClick={() => handleNavigateToReserva(pedido.id)}
                       disabled={pedido.estado !== "APROBADO"} // Deshabilitar si el estado no es APROBADO
@@ -104,9 +124,15 @@ const ListarPedidosYReservas = () => {
                             : "not-allowed", // Cambia el cursor
                         opacity: pedido.estado === "APROBADO" ? 1 : 0.5, // Ajusta la opacidad
                       }}
+                      title={
+                        pedido.estado !== "APROBADO"
+                          ? "Este pedido debe ser aprobado antes de poder registrar una reserva."
+                          : ""
+                      }
                     >
                       Registrar Reserva
                     </button>
+                  )}
                   </td>
                 </tr>
               ))}
@@ -143,8 +169,10 @@ const ListarPedidosYReservas = () => {
                       <ul>
                         {reserva.lineasReservas.map((linea) => (
                           <li key={linea.id}>
-                            {linea.producto.descripcion} -{" "}
-                            {linea.cantidadReservada}
+                            {linea.producto
+                              ? linea.producto.descripcion
+                              : "Producto desconocido"}{" "}
+                            - {linea.cantidadReservada}
                           </li>
                         ))}
                       </ul>

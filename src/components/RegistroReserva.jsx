@@ -84,7 +84,7 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
             alert('Reserva registrada exitosamente.');
           })
           .catch((error) => {
-            console.error('Error al registrar la reserva', error);
+            console.error('Error al registrar la reserva', error.message);
             alert('Error al registrar la reserva');
           });
       } else {

@@ -1,62 +1,70 @@
 .aprobar-pedido-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  .aprobar-pedido-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  
-  .aprobar-pedido-button:disabled {
-    background-color: #ccc;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  .success-message {
-    color: green;
-    margin-top: 10px;
-  }
-  
-    
-  button {
-    background-color: #28a745; /* Verde del logo de ISUSA */
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease; /* Transición suave para hover */
+  max-width: 500px; /* Ajusta el ancho del contenedor */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-    background-color: #218838; /* Un verde ligeramente más oscuro para el hover */
+.aprobar-pedido-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaciado entre elementos */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+}
+
+select {
+  width: 100%; /* Asegura que el select ocupe todo el ancho disponible */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #333;
+}
+
+select:focus {
+  outline: none;
+  border-color: #28a745;
+}
+
+button.aprobar-pedido-button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button.aprobar-pedido-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button.aprobar-pedido-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 14px;
 }

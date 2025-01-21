@@ -5,8 +5,15 @@ const ReservasProximaSemana = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    fetch('http://localhost:5183/api/v1/Reserva/ReservasSemanaProxima')
+    fetch('https://localhost:7218/api/v1/Reserva/ReservasSemanaProxima', {
+      // method: 'GET',
+       headers: {
+         "Authorization": `Bearer ${token}`,
+       },
+     })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al obtener las reservas');

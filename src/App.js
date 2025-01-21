@@ -12,6 +12,7 @@ import ListarPedidosYReservasPorClienteE from "./components/ListarPedidosYReserv
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/authSlice";
 import ReservasProximaSemana from "./components/ReservasProximaSemana";
+import TurnodeCarga from "./components/TurnodeCarga";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import logo from './img/unnamed.png';
 
@@ -63,6 +64,9 @@ function App() {
                   <li>
                     <Link to="/reservasProxSemana">Reservas semana próxima</Link>
                   </li> 
+                  <li>
+                    <Link to="/turnoDeCarga">Turno de carga</Link>
+                  </li> 
                 </>
               )}
               {isAuthenticated && role === "Cliente" && (
@@ -70,9 +74,9 @@ function App() {
                   <li>
                     <Link to="/registrarPedido">Registrar pedido</Link>
                   </li>
-                  <li>
+                {/*   <li>
                     <Link to="/registrarReserva">Registrar reserva</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/productos">Productos</Link>
                   </li>
@@ -101,6 +105,8 @@ function App() {
             <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
             <Route path="/productos" element={<ListaProductos />} />
             <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
+            <Route path="/turnoDeCarga" element={<TurnodeCarga/>}/>
+
 
             {/* Rutas compartidas para Cliente y Empleado */}
             <Route element={<ProtectedRoute allowedRoles={["Cliente", "Empleado"]} />}>
@@ -111,16 +117,15 @@ function App() {
             <Route element={<ProtectedRoute allowedRoles={["Cliente"]} />}>
               <Route path="/registrarPedido" element={<RegistrarPedido />} />
               <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />}/>
-              {/* <Route path="/productos" element={<ListaProductos />} /> */}
               <Route path="/pedidosYReservas" element={<ListarPedidosYReservas />} />
             </Route>
 
             {/* Rutas protegidas para Empleado */}
             <Route element={<ProtectedRoute allowedRoles={["Empleado"]} />}>
               <Route path="/aprobarPedido" element={<AprobarPedido />} />
-              {/* <Route path="/productos" element={<ListaProductos />} /> */}
               <Route path="/listarPedidosReservasClienteE" element={<ListarPedidosYReservasPorClienteE />} />
               <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
+              <Route path="/turnoDeCarga" element={<TurnodeCarga/>}/>
             </Route>
           </Routes>
         </main>

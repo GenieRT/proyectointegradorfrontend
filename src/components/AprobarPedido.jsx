@@ -77,7 +77,7 @@ const AprobarPedido = () => {
             onChange={(e) => setPedidoId(e.target.value)}
             required
           >
-            <option value="">Seleccione un pedido</option>
+            <option value="">-- Seleccione un pedido --</option>
             {pedidos.map((pedido) => (
               <option key={pedido.id} value={pedido.id}>
                 {`ID: ${pedido.id} | Estado: ${pedido.estado} | Fecha: ${pedido.fecha} | ID Cliente: ${pedido.clienteId}`}              </option>
