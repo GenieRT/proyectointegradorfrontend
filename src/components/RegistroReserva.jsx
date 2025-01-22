@@ -11,6 +11,8 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
     const [camion, setCamion] = useState('');
     const [chofer, setChofer] = useState('');
     const [lineasReservas, setLineasReservas] = useState([]);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const pedidoId = queryParams.get("pedidoId"); // Obtén el pedidoId de la URL
@@ -78,7 +80,39 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
           },
           body: JSON.stringify(reserva),
         })
-          .then((response) => response.json())
+        .then(async (response) => {
+          console.log('Estado de la respuesta:', response.status);
+          //const data = await response.json(); // Parsear el cuerpo de la respuesta
+          let data;
+          try {
+            data = await response.json(); // Intentar parsear JSON
+          } catch (e){
+            console.error('Error al parsear el JSON:', e);
+            data = {}; // Si no es JSON, establecer como objeto vacío
+          }
+
+          console.log('Cuerpo de la respuesta:', data);
+
+          if (response.ok) {
+            setSuccessMessage(data.message || 'Reserva registrada exitosamente.');
+            setErrorMessage(''); // Limpiar mensajes de error
+            dispatch(registarReservas(data));
+          } else {
+            setErrorMessage(data.message || 'Error al registrar la reserva.');
+            setSuccessMessage(''); // Limpiar mensajes de éxito
+          }
+        })
+        .catch((error) => {
+          console.error('Error al registrar la reserva', error.message);
+          setErrorMessage('Error inesperado al registrar la reserva.');
+          setSuccessMessage('');
+        });
+    } else {
+      setErrorMessage('Por favor, complete todos los campos.');
+      setSuccessMessage('');
+    }
+
+         /* .then((response) => response.json())
           .then((data) => {
             dispatch(registarReservas(data));
             alert('Reserva registrada exitosamente.');
@@ -89,7 +123,7 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
           });
       } else {
         alert('Por favor, complete todos los campos.');
-      }
+      }*/
     };
   
     const handleAddLineaReserva = (productoId, cantidadReservada) => {
@@ -178,7 +212,13 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
         ) : (
           <p>No hay productos disponibles en este pedido.</p>
         )}
-  
+
+        <div>
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+        </div>
+
+
         <button type="button" onClick={handleRegistrarReserva}>
           Registrar Reserva
         </button>

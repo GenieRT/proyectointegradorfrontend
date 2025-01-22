@@ -4,6 +4,8 @@ const RegistrarPedido = () => {
   const [productos, setProductos] = useState([]); // Productos obtenidos de la API
   const [presentaciones, setPresentaciones] = useState([]); // Presentaciones obtenidas de la API
   const [productosSeleccionados, setProductosSeleccionados] = useState([]); // Lista de productos seleccionados con presentaciones
+  const [successMessage, setSuccessMessage] = useState(""); // Mensaje de éxito
+  const [error, setError] = useState(null); // Para manejar errores
   const [nuevoProducto, setNuevoProducto] = useState({
     productoId: '',
     presentacionId: '',
@@ -82,15 +84,18 @@ const RegistrarPedido = () => {
     })
       .then((response) => {
         if (response.ok) {
-          alert('Pedido registrado con éxito');
+          //alert('Pedido registrado con éxito');
+          setSuccessMessage("Pedido registrado con éxito.");
           setProductosSeleccionados([]); // Limpia el carrito después de hacer el pedido
         } else {
           alert('Error al registrar el pedido');
+          //setError(error.message); 
         }
       })
       .catch((error) => {
         console.error('Error al registrar el pedido:', error);
         alert('Hubo un error al registrar el pedido');
+        //setError(error.message); 
       });
   };
 
@@ -171,6 +176,8 @@ const RegistrarPedido = () => {
                       );
                     })}
                   </ul>
+                  {/* {error && <p className="error-message">{error}</p>}
+                  {successMessage && <p className="success-message">{successMessage}</p>} */}
                   <button
                     type="button"
                     className="btn btn-primary mt-3"
