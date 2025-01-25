@@ -18,6 +18,8 @@ import logo from './img/unnamed.png';
 
 
 function App() {
+  document.title = "ISUSA";
+  
   const { isAuthenticated, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
