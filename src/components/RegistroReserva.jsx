@@ -40,7 +40,7 @@ const RegistroReserva = () => {
                 .then((response) => response.json())
                 .then((producto) => ({
                   ...producto,
-                  cantidadOrdenada: linea.cantidad,
+                  cantidadRestante: linea.cantidadRestante,
                 }))
             )
           ).then((productos) => setProductosDetalles(productos.filter((p) => p)));
@@ -98,13 +98,13 @@ const RegistroReserva = () => {
     }
   };
 
-  const handleAddLineaReserva = (productoId, cantidadReservada) => {
+  const handleAddLineaReserva = (productoId, cantidadRestante) => {
     if (productoReservadoId && productoReservadoId !== productoId) {
       alert('Solo se puede reservar un producto por pedido.');
       return;
     }
 
-    setLineasReservas([{ productoId, cantidadReservada }]);
+    setLineasReservas([{ productoId, cantidadRestante }]);
     setProductoReservadoId(productoId); // Registrar el producto reservado
   };
 
@@ -149,7 +149,7 @@ const RegistroReserva = () => {
         productosDetalles.map((producto) => (
           <div key={producto.id}>
             <span>
-              {producto.descripcion} (Cantidad ordenada: {producto.cantidadOrdenada})
+              {producto.descripcion} (Cantidad Restante: {producto.cantidadRestante})
             </span>
             <input
               type="number"
@@ -159,7 +159,7 @@ const RegistroReserva = () => {
               disabled={productoReservadoId && productoReservadoId !== producto.id} // Deshabilitar si otro producto ya fue reservado
               onChange={(e) => {
                 const cantidad = parseInt(e.target.value, 10);
-                if (cantidad > 0 && cantidad <= producto.cantidadOrdenada) {
+                if (cantidad > 0 && cantidad <= producto.cantidadRestante) {
                   handleAddLineaReserva(producto.id, cantidad);
                 } else {
                   alert('Ingrese un valor válido.');
