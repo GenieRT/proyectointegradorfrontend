@@ -161,7 +161,7 @@ const PedidosYReservasPorCliente = () => {
                       <ul>
                         {reserva.lineasReservas.map((linea) => (
                           <li key={linea.id}>
-                            {`${linea.producto.descripcion} - ${linea.cantidadReservada}`}
+                            {`${linea.producto.descripcion} - ${linea.cantidadReservada} TON`}
                           </li>
                         ))}
                       </ul>

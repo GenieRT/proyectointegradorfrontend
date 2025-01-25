@@ -84,14 +84,9 @@ const ListarPedidosYReservas = () => {
                       <ul>
                         {pedido.productos.map((prod) => (
                           <li key={prod.id}>
-                            {/* Validar que producto y presentacion no sean null */}
-                            {prod.producto
-                              ? prod.producto.descripcion
-                              : "Producto desconocido"}{" "}
-                            - {prod.cantidad}{" "}
-                            {prod.presentacion
-                              ? prod.presentacion.unidad
-                              : "Unidad desconocida"}
+                            {/* Validar que producto no sea null */}
+                            {prod.producto ? prod.producto.descripcion : "Producto desconocido"}{" "}
+                            - {prod.cantidad} TON
                           </li>
                         ))}
                       </ul>
@@ -172,7 +167,7 @@ const ListarPedidosYReservas = () => {
                             {linea.producto
                               ? linea.producto.descripcion
                               : "Producto desconocido"}{" "}
-                            - {linea.cantidadReservada}
+                            - {linea.cantidadReservada} TON
                           </li>
                         ))}
                       </ul>
