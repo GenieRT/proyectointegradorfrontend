@@ -70,11 +70,11 @@ const TurnodeCarga = () => {
 
   return (
     <form>
-      <h2>Registrar Turno de Carga inicio</h2>
+      <h2>Registrar Turno de Carga </h2>
 
       {/* Campo de Fecha */}
       <label>
-        Fecha de carga:
+        Fecha de carga inicio:
         <input
           type="date"
           value={fechaInicioSemana}
