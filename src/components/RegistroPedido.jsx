@@ -11,7 +11,7 @@ const RegistrarPedido = () => {
     presentacionId: '',
     cantidad: '',
   }); // Formulario para un nuevo producto
-  const [clienteId] = useState(1); // Cliente ID (cambiarlo dinámicamente)
+   const [clienteId] = localStorage.getItem("id");
   const token = localStorage.getItem("token");
 
   //limpiar mensajes
