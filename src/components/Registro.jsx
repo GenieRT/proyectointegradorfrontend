@@ -20,7 +20,7 @@ const Registro = () => {
         return;
     }
 
-    fetch("https://localhost:7218/api/Usuario/ActualizarContraseña", {
+    fetch("https://isusawebapi.azurewebsites.net/api/Usuario/ActualizarContraseña", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

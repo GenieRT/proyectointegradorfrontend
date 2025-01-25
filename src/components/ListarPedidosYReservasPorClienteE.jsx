@@ -40,7 +40,7 @@ const PedidosYReservasPorCliente = () => {
     setError(null);
     try {
       const response = await fetch(
-        `https://localhost:7218/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
+        `https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

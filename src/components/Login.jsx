@@ -20,7 +20,7 @@ const Login = () => {
  
 
     try {
-      const response = await fetch("https://localhost:7218/api/Usuario/IniciarSesion", {
+      const response = await fetch("https://isusawebapi.azurewebsites.net/api/Usuario/IniciarSesion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

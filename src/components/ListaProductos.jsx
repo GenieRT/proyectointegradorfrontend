@@ -8,7 +8,7 @@ const ProductosTabla = () => {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    fetch('https://localhost:7218/api/v1/Producto', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
       //method: "GET", //por defecto es get
       headers: {
         Authorization: `Bearer ${token}`,

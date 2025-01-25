@@ -8,7 +8,7 @@ const ReservasProximaSemana = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch('https://localhost:7218/api/v1/Reserva/ReservasSemanaProxima', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva/ReservasSemanaProxima', {
       // method: 'GET',
        headers: {
          "Authorization": `Bearer ${token}`,

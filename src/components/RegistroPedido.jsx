@@ -16,7 +16,7 @@ const RegistrarPedido = () => {
 
   // Obtener productos y presentaciones al cargar el componente
   useEffect(() => {
-    fetch('https://localhost:7218/api/v1/Producto', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -26,7 +26,7 @@ const RegistrarPedido = () => {
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener productos:', error));
 
-    fetch('https://localhost:7218/api/v1/Presentacion', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Presentacion', {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -74,7 +74,7 @@ const RegistrarPedido = () => {
       clienteId,
     };
 
-    fetch('https://localhost:7218/api/v1/Pedido', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Pedido', {
       method: 'POST',
       body: JSON.stringify(pedido),
       headers: { 

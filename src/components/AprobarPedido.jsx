@@ -12,7 +12,7 @@ const AprobarPedido = () => {
   useEffect(() => {
     const fetchPedidosPendientes = async () => {
       try {
-        const response = await fetch("https://localhost:7218/api/v1/Pedido/PedidosPendientes", {
+        const response = await fetch("https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosPendientes", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`, 
           },
@@ -41,7 +41,7 @@ const AprobarPedido = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`https://localhost:7218/api/v1/Pedido/AprobarPedido?pedidoId=${pedidoId}`, {
+      const response = await fetch(`https://isusawebapi.azurewebsites.net/api/v1/Pedido/AprobarPedido?pedidoId=${pedidoId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

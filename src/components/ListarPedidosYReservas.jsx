@@ -15,7 +15,7 @@ const ListarPedidosYReservas = () => {
     const fetchPedidosYReservas = async () => {
       try {
         const response = await fetch(
-          `https://localhost:7218/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
+          `https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
           {
             method: "GET",
             headers: {

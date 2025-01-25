@@ -16,7 +16,7 @@ const ListarReservasEmpleado = () => {
     }
 
     // Realiza la solicitud con el token
-    fetch('https://localhost:44314/api/v1/Reserva/ReservasEmpleado', {
+    fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva/ReservasEmpleado', {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",

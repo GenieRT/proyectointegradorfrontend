@@ -25,7 +25,7 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
     // Fetch para obtener el pedido por ID y sus líneas
     useEffect(() => {
       if (pedidoId) {
-        fetch(`https://localhost:7218/api/v1/Pedido/${pedidoId}`, {
+        fetch(`https://isusawebapi.azurewebsites.net/api/v1/Pedido/${pedidoId}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
@@ -37,7 +37,7 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
             // Obtener los productos asociados a las líneas del pedido
             Promise.all(
               data.productos.map((linea) =>
-                fetch(`https://localhost:7218/api/v1/Producto/${linea.productoId}`, {
+                fetch(`https://isusawebapi.azurewebsites.net/api/v1/Producto/${linea.productoId}`, {
                 headers: {
                   Authorization: `Bearer ${token}`, // Agrega el token aquí
               },
@@ -72,7 +72,7 @@ const RegistroReserva = (/* { pedidoId, clienteId } */) => {
           lineasReservas,
         };
   
-        fetch('https://localhost:7218/api/v1/Reserva', {
+        fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
