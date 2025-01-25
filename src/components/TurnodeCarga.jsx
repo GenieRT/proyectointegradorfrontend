@@ -6,34 +6,45 @@ const TurnodeCarga = () => {
   const dispatch = useDispatch();
 
   // Estado para el formulario
-  const [fecha, setFecha] = useState('');
+  const [fechaInicioSemana, setFecha] = useState('');
+  const [fechaFinSemana, setFecha2] = useState('');
   const [toneladas, setToneladas] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); 
+  const [error, setError] = useState(null);
+
 
   // Función para registrar el turno de carga
   const handleRegistrarTurno = async () => {
     // Validación básica de datos
-    if (!fecha || !toneladas || isNaN(toneladas) || toneladas <= 0) {
+    if (!fechaInicioSemana || !fechaFinSemana || !toneladas || isNaN(toneladas) || toneladas <= 0) {
       alert('Por favor, complete todos los campos con valores válidos.');
       return;
     }
 
     // Convertir la fecha al formato ISO 8601
-    const fechaISO = new Date(fecha).toISOString();
 
+    const fechaInicioISO = new Date(fechaInicioSemana).toISOString();
+    const fechaFinISO = new Date(fechaFinSemana).toISOString();
+
+    const token = localStorage.getItem("token");
     // Creación del objeto turno
     const turno = {
-      fecha: fechaISO,
+      fechaInicioSemana: fechaInicioISO,
+      fechaFinSemana: fechaFinISO,
       toneladas: parseFloat(toneladas), // Convertir a número
     };
 
     try {
       console.log('Enviando datos al backend:', turno);
 
-      const response = await fetch('https://isusawebapi.azurewebsites.net/api/v1/TurnosCarga', {
+      const response = await fetch('https://localhost:7218/api/v1/TurnosCarga', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`,
         },
+
         body: JSON.stringify(turno),
       });
 
@@ -48,26 +59,38 @@ const TurnodeCarga = () => {
       console.log('Respuesta del servidor:', data);
 
       dispatch(registrarTurno(data));
-      alert('Turno registrado exitosamente.');
+      setSuccessMessage("Registro de turno exitoso.");
       setFecha('');
+      setFecha2('');
       setToneladas('');
     } catch (error) {
-      console.error('Error al registrar el turno:', error);
-      alert(`Error al registrar el turno: ${error.message}`);
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     }
   };
 
   return (
     <form>
-      <h2>Registrar Turno de Carga</h2>
+      <h2>Registrar Turno de Carga inicio</h2>
 
       {/* Campo de Fecha */}
       <label>
         Fecha de carga:
         <input
           type="date"
-          value={fecha}
+          value={fechaInicioSemana}
           onChange={(e) => setFecha(e.target.value)}
+          required
+        />
+      </label>
+
+
+      {/* Campo de Fecha2 */}
+      <label>
+        Fecha de carga fin:
+        <input
+          type="date"
+          value={fechaFinSemana}
+          onChange={(e) => setFecha2(e.target.value)}
           required
         />
       </label>
@@ -84,6 +107,8 @@ const TurnodeCarga = () => {
           required
         />
       </label>
+      {error && <p className="error-message">{error}</p>}
+      {successMessage && <p className="success-message">{successMessage}</p>}
 
       {/* Botón para registrar */}
       <button type="button" onClick={handleRegistrarTurno}>
