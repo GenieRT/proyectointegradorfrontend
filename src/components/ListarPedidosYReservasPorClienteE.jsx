@@ -121,7 +121,7 @@ const PedidosYReservasPorCliente = () => {
                       <ul>
                         {pedido.productos.map((producto) => (
                           <li key={producto.id}>
-                            {`${producto.producto.descripcion} - ${producto.cantidad} ${producto.presentacion.unidad}`}
+                            {`${producto.producto.descripcion} - ${producto.cantidad} TON`}
                           </li>
                         ))}
                       </ul>
