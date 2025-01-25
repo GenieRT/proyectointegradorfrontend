@@ -14,9 +14,19 @@ const RegistrarPedido = () => {
   const [clienteId] = useState(1); // Cliente ID (cambiarlo dinámicamente)
   const token = localStorage.getItem("token");
 
+  //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 5 segundos
+  }
+//----------------------------------------------------------------------------------
+
   // Obtener productos y presentaciones al cargar el componente
   useEffect(() => {
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
+    fetch('https://localhost:7218/api/v1/Producto', {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -26,7 +36,7 @@ const RegistrarPedido = () => {
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener productos:', error));
 
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Presentacion', {
+    fetch('https://localhost:7218/api/v1/Presentacion', {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -43,7 +53,8 @@ const RegistrarPedido = () => {
 
   const handleAgregarProducto = () => {
     if (!nuevoProducto.productoId || !nuevoProducto.presentacionId || !nuevoProducto.cantidad) {
-      alert('Por favor complete todos los campos antes de agregar el producto.');
+      setError('Por favor complete todos los campos antes de agregar el producto.');
+     limpiarMensajes();
       return;
     }
 
@@ -61,8 +72,10 @@ const RegistrarPedido = () => {
     //const fecha = new Date().toISOString();
 
     if (productosSeleccionados.length === 0) {
-      alert('Debe agregar al menos un producto antes de realizar el pedido.');
+      setError("Debe seleccionar algún producto para compltar el pedido");
+      limpiarMensajes();
       return;
+      
     }
 
     const pedido = {
@@ -74,7 +87,7 @@ const RegistrarPedido = () => {
       clienteId,
     };
 
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Pedido', {
+    fetch('https://localhost:7218/api/v1/Pedido', {
       method: 'POST',
       body: JSON.stringify(pedido),
       headers: { 
@@ -84,18 +97,17 @@ const RegistrarPedido = () => {
     })
       .then((response) => {
         if (response.ok) {
-          //alert('Pedido registrado con éxito');
           setSuccessMessage("Pedido registrado con éxito.");
+          limpiarMensajes();
           setProductosSeleccionados([]); // Limpia el carrito después de hacer el pedido
         } else {
-          alert('Error al registrar el pedido');
-          //setError(error.message); 
+          setError(error.message); 
         }
       })
       .catch((error) => {
         console.error('Error al registrar el pedido:', error);
-        alert('Hubo un error al registrar el pedido');
-        //setError(error.message); 
+        setError(error.message);
+        limpiarMensajes();
       });
   };
 
@@ -106,6 +118,7 @@ const RegistrarPedido = () => {
           <div className="card">
             <div className="card-header">Registrar Pedido</div>
             <div className="card-body">
+       
               <div className="border p-3">
                 <h5>Agregar Producto</h5>
                 <div className="form-group">
@@ -176,8 +189,7 @@ const RegistrarPedido = () => {
                       );
                     })}
                   </ul>
-                  {/* {error && <p className="error-message">{error}</p>}
-                  {successMessage && <p className="success-message">{successMessage}</p>} */}
+             
                   <button
                     type="button"
                     className="btn btn-primary mt-3"
@@ -187,12 +199,22 @@ const RegistrarPedido = () => {
                   </button>
                 </div>
               )}
+                {/* Mostrar mensajes de éxito o error después de registrar */}
+         {successMessage && (
+              <p className="success-message">{successMessage}</p>
+            )}
+            {error && (
+              <p className="error-message">{error}</p>
+            )}
             </div>
           </div>
         </div>
       </div>
     </div>
+    
   );
+  
 };
 
 export default RegistrarPedido;
+// Función para limpiar los mensajes después de un tiempo
