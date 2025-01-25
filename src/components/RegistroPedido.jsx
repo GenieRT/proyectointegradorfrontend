@@ -158,7 +158,7 @@ const RegistrarPedido = () => {
                     className="form-control"
                     value={nuevoProducto.cantidad}
                     onChange={(e) => handleNuevoProductoChange('cantidad', e.target.value)}
-                    placeholder="Ingrese la cantidad"
+                    placeholder="Ingrese la cantidad (en toneladas)"
                   />
                 </div>
                 <button type="button" className="btn btn-success mt-3" onClick={handleAgregarProducto}>
