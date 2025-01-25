@@ -100,18 +100,18 @@ const ListarPedidosYReservas = () => {
                     )}
                   </td>
                   <td>
-                  {pedido.reservas.length > 0 ? (
-                  <span
-                    style={{
-                      color: "green",
-                      fontWeight: "bold",
-                      padding: "5px 10px",
-                      backgroundColor: "#e6ffe6",
-                      borderRadius: "5px",
-                      display: "inline-block",
-                    }}
-                  >
-                    Pedido ya reservado
+                  {pedido.estado === "CERRADO" && pedido.reservas.length > 0 ? (
+                    <span
+                      style={{
+                        color: "green",
+                        fontWeight: "bold",
+                        padding: "5px 10px",
+                        backgroundColor: "#e6ffe6",
+                        borderRadius: "5px",
+                        display: "inline-block",
+                      }}
+                    >
+                      Pedido ya reservado
                     </span>
                   ) : (
                     <button
@@ -133,7 +133,7 @@ const ListarPedidosYReservas = () => {
                       Registrar Reserva
                     </button>
                   )}
-                  </td>
+                </td>
                 </tr>
               ))}
             </tbody>

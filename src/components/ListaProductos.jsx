@@ -5,11 +5,10 @@ import { setProductos } from '../features/productoSlice';
 const ProductosTabla = () => {
   const dispatch = useDispatch();
   const { productos } = useSelector((state) => state.productos);
-  const { token } = useSelector((state) => state.auth);
+  const { token, role } = useSelector((state) => state.auth); // rol indica si es cliente o empleado
 
   useEffect(() => {
     fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
-      //method: "GET", //por defecto es get
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -26,7 +25,8 @@ const ProductosTabla = () => {
       .catch((error) => {
         console.error('Error al obtener los productos', error);
       });
-  }, [dispatch]);
+  }, [dispatch, token]);
+
   return (
     <div>
       <h2>Listado de Productos</h2>
@@ -34,16 +34,16 @@ const ProductosTabla = () => {
         <thead>
           <tr>
             <th>Descripción</th>
-            <th>Stock Disponible</th>
-            <th>Precio</th>
+            {role === 'Empleado' && <th>Stock Disponible</th>}
+            {role === 'Cliente' && <th>Precio</th>}
           </tr>
         </thead>
         <tbody>
           {productos.map((producto) => (
             <tr key={producto.id}>
               <td>{producto.descripcion}</td>
-              <td>{producto.stockDisponible}</td>
-              <td>{producto.costo}</td>
+              {role === 'Empleado' && <td>{producto.stockDisponible}</td>}
+              {role === 'Cliente' && <td>{producto.costo}</td>}
             </tr>
           ))}
         </tbody>

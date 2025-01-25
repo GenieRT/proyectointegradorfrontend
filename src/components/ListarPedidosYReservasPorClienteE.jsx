@@ -15,7 +15,7 @@ const PedidosYReservasPorCliente = () => {
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await fetch("https://localhost:7218/api/v1/Cliente", {
+        const response = await fetch("https://isusawebapi.azurewebsites.net/api/v1/Cliente", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

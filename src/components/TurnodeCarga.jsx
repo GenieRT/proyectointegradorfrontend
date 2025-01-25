@@ -38,7 +38,7 @@ const TurnodeCarga = () => {
     try {
       console.log('Enviando datos al backend:', turno);
 
-      const response = await fetch('https://localhost:7218/api/v1/TurnosCarga', {
+      const response = await fetch('https://isusawebapi.azurewebsites.net/api/v1/TurnosCarga', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
