@@ -26,7 +26,6 @@ function App() {
   console.log("isAuthenticated:", isAuthenticated);
   console.log("role:", role);
 
-
   const handleLogout = () => {
     dispatch(logout());
     window.location.href = "/login"; // Redirige al usuario al login después de cerrar sesión
