@@ -7,16 +7,27 @@ const Registro = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setError] = useState(""); 
   const navigate = useNavigate();
+
+ //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
+
 
   const handleRegistro = (e) => {
     e.preventDefault();
 
     // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
-        setErrorMessage("Las contraseñas no coinciden.");
-        setSuccessMessage("");
+      setError("Las contraseñas no coinciden.");
+        limpiarMensajes();
         return;
     }
 
@@ -38,13 +49,15 @@ const Registro = () => {
       .then((data) => {
         console.log("Registro exitoso:", data);
         setSuccessMessage("Registro exitoso. Por favor, revise su correo para confirmar su contraseña.");
-        setErrorMessage("");
+        setError("");
+        limpiarMensajes();
         setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
       })
       .catch((error) => {
         console.error("Error:", error.message);
-        setErrorMessage(error.message);
+        setError(error.message);
         setSuccessMessage("");
+        limpiarMensajes();
       });
   };
 

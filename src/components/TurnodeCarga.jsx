@@ -14,14 +14,36 @@ const TurnodeCarga = () => {
   const [error, setError] = useState(null);
 
 
+//limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
+
   // Función para registrar el turno de carga
   const handleRegistrarTurno = async () => {
+    const fechaActual = new Date().toISOString().slice(0, 10); // Fecha actual en formato YYYY-MM-DD
     // Validación básica de datos
-    if (!fechaInicioSemana || !fechaFinSemana || !toneladas || isNaN(toneladas) || toneladas <= 0) {
-      alert('Por favor, complete todos los campos con valores válidos.');
+     if (!fechaInicioSemana || !fechaFinSemana || !toneladas || isNaN(toneladas) || toneladas <= 0) {
+      setError('Por favor, complete todos los campos con valores válidos.');
+      limpiarMensajes();
       return;
-    }
-
+    } 
+    else if (fechaInicioSemana < fechaActual) {
+      setError("La fecha de inicio no puede ser menor a la fecha actual.");
+      limpiarMensajes();
+      return;
+    } 
+    else if(fechaFinSemana<fechaInicioSemana){
+        
+      setError('La fecha de finalización debe ser mayor a la de inicio');
+       limpiarMensajes();
+       return;
+}
     // Convertir la fecha al formato ISO 8601
 
     const fechaInicioISO = new Date(fechaInicioSemana).toISOString();
@@ -60,6 +82,7 @@ const TurnodeCarga = () => {
 
       dispatch(registrarTurno(data));
       setSuccessMessage("Registro de turno exitoso.");
+      limpiarMensajes();
       setFecha('');
       setFecha2('');
       setToneladas('');

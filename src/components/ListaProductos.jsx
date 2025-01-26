@@ -7,6 +7,10 @@ const ProductosTabla = () => {
   const { productos } = useSelector((state) => state.productos);
   const { token, role } = useSelector((state) => state.auth); // rol indica si es cliente o empleado
 
+
+
+
+  
   useEffect(() => {
     fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
       headers: {

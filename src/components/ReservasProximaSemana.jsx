@@ -4,8 +4,19 @@ const ReservasProximaSemana = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const token = localStorage.getItem("token");
+
+  //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
 
   useEffect(() => {
     fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva/ReservasSemanaProxima', {
@@ -19,6 +30,7 @@ const ReservasProximaSemana = () => {
           throw new Error('Error al obtener las reservas');
         }
         return response.json();
+        
       })
       .then((data) => {
         setReservas(data); // Guardamos las reservas en el estado
@@ -26,6 +38,7 @@ const ReservasProximaSemana = () => {
       .catch((error) => {
         console.error('Error al obtener las reservas:', error);
         setError('No se pudieron cargar las reservas. Intente nuevamente más tarde.');
+        limpiarMensajes();
       })
       .finally(() => {
         setLoading(false);

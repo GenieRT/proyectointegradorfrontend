@@ -8,6 +8,21 @@ const AprobarPedido = () => {
   const [loading, setLoading] = useState(false); // Estado de carga
   const [successMessage, setSuccessMessage] = useState(""); // Mensaje de éxito
 
+
+
+  //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
+
+
+
+
   // Cargar pedidos pendientes desde el backend
   useEffect(() => {
     const fetchPedidosPendientes = async () => {
@@ -28,6 +43,7 @@ const AprobarPedido = () => {
       } catch (error) {
         console.error("Error al obtener los pedidos pendientes:", error.message);
         setError(error.message); // Muestra el mensaje específico del backend
+        limpiarMensajes();
       }
     };
 
@@ -56,10 +72,12 @@ const AprobarPedido = () => {
       }
 
       setSuccessMessage("Pedido aprobado con éxito.");
+      limpiarMensajes();
       setPedidoId(""); 
     } catch (error) {
       console.error("Error al aprobar pedido:", error.message);
       setError(error.message);
+      limpiarMensajes();
     } finally {
       setLoading(false);
     }

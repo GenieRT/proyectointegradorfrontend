@@ -10,6 +10,19 @@ const PedidosYReservasPorCliente = () => {
   const [pedidosReservas, setPedidosReservas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+
+
+
+   //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
 
   // Obtener lista de clientes al cargar el componente
   useEffect(() => {
@@ -28,6 +41,7 @@ const PedidosYReservasPorCliente = () => {
         setClientes(data);
       } catch (err) {
         setError(err.message);
+        limpiarMensajes();
       }
     };
 
@@ -55,6 +69,7 @@ const PedidosYReservasPorCliente = () => {
       setPedidosReservas(data);
     } catch (err) {
       setError(err.message);
+      limpiarMensajes();
     } finally {
       setLoading(false);
     }

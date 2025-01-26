@@ -9,7 +9,19 @@ const ListarPedidosYReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
+
+  
+ //limpiar mensajes
+//----------------------------------------------------------------------------
+const limpiarMensajes = () => {
+  setTimeout(() => {
+    setError(null);
+    setSuccessMessage("");
+  }, 3000); // Los mensajes desaparecerán después de 3 segundos
+}
+//----------------------------------------------------------------------------------
 
   useEffect(() => {
     const fetchPedidosYReservas = async () => {
@@ -35,6 +47,7 @@ const ListarPedidosYReservas = () => {
         setReservas(data.reservas); // Acceder a la propiedad 'reservas'
       } catch (err) {
         setError(err.message);
+        limpiarMensajes();
       } finally {
         setLoading(false);
       }
@@ -44,6 +57,7 @@ const ListarPedidosYReservas = () => {
       fetchPedidosYReservas();
     } else {
       setError("ID del cliente no disponible.");
+      limpiarMensajes();
       setLoading(false);
     }
   }, [token, clienteId]);

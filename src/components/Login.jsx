@@ -12,6 +12,17 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
 
+ //limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); 
@@ -30,6 +41,7 @@ const Login = () => {
 
       if (!response.ok) {
         throw new Error("Credenciales inválidas o error del servidor.");
+        
       }
 
       const data = await response.json(); // Respuesta del backend (esperamos un token y usuario)
@@ -44,6 +56,7 @@ const Login = () => {
       );
 
       setSuccessMessage("Inicio de sesión exitoso.");
+      limpiarMensajes();
       setError(null);
       console.log("Usuario autenticado:", data);
 
@@ -52,6 +65,7 @@ const Login = () => {
     } catch (error) {
       console.error("Error al iniciar sesión:", error.message);
       setError(error.message); // Mostrar el error al usuario
+      limpiarMensajes();
     } finally {
       setLoading(false); // Finalizar el estado de carga
     }

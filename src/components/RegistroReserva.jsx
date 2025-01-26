@@ -12,13 +12,24 @@ const RegistroReserva = () => {
   const [chofer, setChofer] = useState('');
   const [lineasReservas, setLineasReservas] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(null); // Para manejar errores
   const [productoReservadoId, setProductoReservadoId] = useState(null); // Nuevo estado
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pedidoId = queryParams.get("pedidoId");
   const clienteId = localStorage.getItem("clienteId");
   const token = localStorage.getItem("token");
+
+//limpiar mensajes
+  //----------------------------------------------------------------------------
+  const limpiarMensajes = () => {
+    setTimeout(() => {
+      setError(null);
+      setSuccessMessage("");
+    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+  }
+//----------------------------------------------------------------------------------
+  
 
   useEffect(() => {
     if (pedidoId) {
@@ -80,21 +91,25 @@ const RegistroReserva = () => {
 
           if (response.ok) {
             setSuccessMessage(data.message || 'Reserva registrada exitosamente.');
-            setErrorMessage('');
+            setError('');
+            limpiarMensajes();
             dispatch(registarReservas(data));
           } else {
-            setErrorMessage(data.message || 'Error al registrar la reserva.');
+            setError(data.message || 'Error al registrar la reserva.');
             setSuccessMessage('');
+            limpiarMensajes();
           }
         })
         .catch((error) => {
           console.error('Error al registrar la reserva', error.message);
-          setErrorMessage('Error inesperado al registrar la reserva.');
+          setError('Error inesperado al registrar la reserva.');
           setSuccessMessage('');
+          limpiarMensajes();
         });
     } else {
-      setErrorMessage('Por favor, complete todos los campos.');
+      setError('Por favor, complete todos los campos.');
       setSuccessMessage('');
+      limpiarMensajes();
     }
   };
 
@@ -173,8 +188,8 @@ const RegistroReserva = () => {
       )}
 
       <div>
-        {successMessage && <div className="alert alert-success">{successMessage}</div>}
-        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+        {successMessage && <div className="success-message">{successMessage}</div>}
+        {error && <div className="error-message">{error}</div>}
       </div>
 
       <button type="button" onClick={handleRegistrarReserva}>
