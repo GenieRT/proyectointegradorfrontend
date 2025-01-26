@@ -72,7 +72,7 @@ const RegistroReserva = () => {
         chofer,
         lineasReservas,
       };
-
+console.log(reserva);
       fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva', {
         method: 'POST',
         headers: {
@@ -113,15 +113,16 @@ const RegistroReserva = () => {
     }
   };
 
-  const handleAddLineaReserva = (productoId, cantidadRestante) => {
+  const handleAddLineaReserva = (productoId, cantidadReservada) => {
     if (productoReservadoId && productoReservadoId !== productoId) {
       alert('Solo se puede reservar un producto por pedido.');
       return;
     }
 
-    setLineasReservas([{ productoId, cantidadRestante }]);
+    setLineasReservas([{ productoId, cantidadReservada }]);
     setProductoReservadoId(productoId); // Registrar el producto reservado
   };
+  
 
   if (!pedido) return <div>Cargando pedido...</div>;
 
@@ -169,16 +170,15 @@ const RegistroReserva = () => {
             <input
               type="number"
               min="1"
-              max={producto.cantidadOrdenada}
+              max={producto.cantidadRestante}
               placeholder="Toneladas a cargar"
+              value={
+                lineasReservas.find((linea) => linea.productoId === producto.id)?.cantidadReservada || ''
+              }
               disabled={productoReservadoId && productoReservadoId !== producto.id} // Deshabilitar si otro producto ya fue reservado
               onChange={(e) => {
-                const cantidad = parseInt(e.target.value, 10);
-                if (cantidad > 0 && cantidad <= producto.cantidadRestante) {
-                  handleAddLineaReserva(producto.id, cantidad);
-                } else {
-                  alert('Ingrese un valor válido.');
-                }
+                const cantidad = parseInt(e.target.value, 10) || 0; // Maneja entradas inválidas
+                handleAddLineaReserva(producto.id, cantidad);
               }}
             />
           </div>
