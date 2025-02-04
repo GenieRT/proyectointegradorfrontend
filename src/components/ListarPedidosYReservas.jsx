@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../apiConfig";
 
 const ListarPedidosYReservas = () => {
   const { token, clienteId } = useSelector((state) => state.auth); // Obtener token y clienteId
@@ -27,7 +28,7 @@ const limpiarMensajes = () => {
     const fetchPedidosYReservas = async () => {
       try {
         const response = await fetch(
-          `https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
+          `${BASE_URL}/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
           {
             method: "GET",
             headers: {

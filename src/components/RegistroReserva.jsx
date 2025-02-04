@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { registarReservas} from '../features/reservaSlice';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registarReservas } from "../features/reservaSlice";
 import { useLocation } from "react-router-dom";
+import BASE_URL from "../apiConfig";
 
 const RegistroReserva = () => {
   const dispatch = useDispatch();
   const [pedido, setPedido] = useState(null);
   const [productosDetalles, setProductosDetalles] = useState([]);
-  const [fecha, setFecha] = useState('');
-  const [camion, setCamion] = useState('');
-  const [chofer, setChofer] = useState('');
+  const [fecha, setFecha] = useState("");
+  const [camion, setCamion] = useState("");
+  const [chofer, setChofer] = useState("");
   const [lineasReservas, setLineasReservas] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState(null); // Para manejar errores
   const [productoReservadoId, setProductoReservadoId] = useState(null); // Nuevo estado
   const location = useLocation();
@@ -20,22 +21,21 @@ const RegistroReserva = () => {
   const clienteId = localStorage.getItem("clienteId");
   const token = localStorage.getItem("token");
 
-//limpiar mensajes
+  //limpiar mensajes
   //----------------------------------------------------------------------------
   const limpiarMensajes = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 3 segundos
-  }
-//----------------------------------------------------------------------------------
-  
+    }, 20000); // Los mensajes desaparecerán después de 3 segundos
+  };
+  //----------------------------------------------------------------------------------
 
   useEffect(() => {
     if (pedidoId) {
-      fetch(`https://isusawebapi.azurewebsites.net/api/v1/Pedido/${pedidoId}`, {
+      fetch(`${BASE_URL}/v1/Pedido/${pedidoId}`, {
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
@@ -43,7 +43,7 @@ const RegistroReserva = () => {
           setPedido(data);
           Promise.all(
             data.productos.map((linea) =>
-              fetch(`https://isusawebapi.azurewebsites.net/api/v1/Producto/${linea.productoId}`, {
+              fetch(`${BASE_URL}/v1/Producto/${linea.productoId}`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -54,10 +54,12 @@ const RegistroReserva = () => {
                   cantidadRestante: linea.cantidadRestante,
                 }))
             )
-          ).then((productos) => setProductosDetalles(productos.filter((p) => p)));
+          ).then((productos) =>
+            setProductosDetalles(productos.filter((p) => p))
+          );
         })
         .catch((error) => {
-          console.error('Error al obtener el pedido', error);
+          console.error("Error al obtener el pedido", error);
         });
     }
   }, [pedidoId]);
@@ -72,57 +74,54 @@ const RegistroReserva = () => {
         chofer,
         lineasReservas,
       };
-console.log(reserva);
-      fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva', {
-        method: 'POST',
+      //console.log(reserva);
+      fetch(`${BASE_URL}/v1/Reserva`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(reserva),
       })
         .then(async (response) => {
           let data;
           try {
-            data = await response.json();
+            data = await response.json(); // Extrae el cuerpo JSON de la respuesta
           } catch {
-            data = {};
+            data = {}; // Si no hay cuerpo, asigna un objeto vacío
           }
 
           if (response.ok) {
-            setSuccessMessage(data.message || 'Reserva registrada exitosamente.');
-            setError('');
+            setSuccessMessage(data.message || "Reserva registrada exitosamente.");
             limpiarMensajes();
             dispatch(registarReservas(data));
           } else {
-            setError(data.message || 'Error al registrar la reserva.');
-            setSuccessMessage('');
-            limpiarMensajes();
+            const errorMessage = data.detalle || data.message || "Error al registrar la reserva.";
+            setError(errorMessage);
           }
+          limpiarMensajes();
         })
+
         .catch((error) => {
-          console.error('Error al registrar la reserva', error.message);
-          setError('Error inesperado al registrar la reserva.');
-          setSuccessMessage('');
+          console.error("Error al registrar la reserva", error.message);
+          setError("Error inesperado al registrar la reserva.");
           limpiarMensajes();
         });
     } else {
-      setError('Por favor, complete todos los campos.');
-      setSuccessMessage('');
+      setError("Por favor, complete todos los campos.");
       limpiarMensajes();
     }
   };
 
   const handleAddLineaReserva = (productoId, cantidadReservada) => {
     if (productoReservadoId && productoReservadoId !== productoId) {
-      alert('Solo se puede reservar un producto por pedido.');
+      alert("Solo se puede reservar un producto por pedido.");
       return;
     }
 
     setLineasReservas([{ productoId, cantidadReservada }]);
     setProductoReservadoId(productoId); // Registrar el producto reservado
   };
-  
 
   if (!pedido) return <div>Cargando pedido...</div>;
 
@@ -165,7 +164,8 @@ console.log(reserva);
         productosDetalles.map((producto) => (
           <div key={producto.id}>
             <span>
-              {producto.descripcion} (Cantidad Restante: {producto.cantidadRestante})
+              {producto.descripcion} (Cantidad Restante:{" "}
+              {producto.cantidadRestante})
             </span>
             <input
               type="number"
@@ -173,9 +173,12 @@ console.log(reserva);
               max={producto.cantidadRestante}
               placeholder="Toneladas a cargar"
               value={
-                lineasReservas.find((linea) => linea.productoId === producto.id)?.cantidadReservada || ''
+                lineasReservas.find((linea) => linea.productoId === producto.id)
+                  ?.cantidadReservada || ""
               }
-              disabled={productoReservadoId && productoReservadoId !== producto.id} // Deshabilitar si otro producto ya fue reservado
+              disabled={
+                productoReservadoId && productoReservadoId !== producto.id
+              } // Deshabilitar si otro producto ya fue reservado
               onChange={(e) => {
                 const cantidad = parseInt(e.target.value, 10) || 0; // Maneja entradas inválidas
                 handleAddLineaReserva(producto.id, cantidad);
@@ -188,7 +191,9 @@ console.log(reserva);
       )}
 
       <div>
-        {successMessage && <div className="success-message">{successMessage}</div>}
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
         {error && <div className="error-message">{error}</div>}
       </div>
 
@@ -198,5 +203,5 @@ console.log(reserva);
     </form>
   );
 };
-  
-  export default RegistroReserva;
+
+export default RegistroReserva;

@@ -1,0 +1,21 @@
+.error-message {
+    color: red; /* Cambia el color del texto a rojo */
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f8d7da; /* Fondo rojo claro */
+    border: 1px solid #f5c2c7; /* Borde rojo */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center;
+  }
+  
+  .success-message {
+    color: green;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #d4edda; /* Fondo verde claro */
+    border: 1px solid #c3e6cb; /* Borde verde */
+    border-radius: 5px;
+    text-align: center;
+  }

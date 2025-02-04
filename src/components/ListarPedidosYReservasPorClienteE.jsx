@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "../styles/ListarPedidosYReservasPorClienteE.css"; 
+import BASE_URL from "../apiConfig";
+
 
 
 const PedidosYReservasPorCliente = () => {
@@ -28,7 +30,7 @@ const PedidosYReservasPorCliente = () => {
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await fetch("https://isusawebapi.azurewebsites.net/api/v1/Cliente", {
+        const response = await fetch(`${BASE_URL}/v1/Cliente`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -54,7 +56,7 @@ const PedidosYReservasPorCliente = () => {
     setError(null);
     try {
       const response = await fetch(
-        `https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
+        `${BASE_URL}/v1/Pedido/PedidosYReservas?clienteId=${clienteId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

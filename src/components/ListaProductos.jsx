@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductos } from '../features/productoSlice';
+import BASE_URL from "../apiConfig";
+
 
 const ProductosTabla = () => {
   const dispatch = useDispatch();
@@ -12,7 +14,7 @@ const ProductosTabla = () => {
 
   
   useEffect(() => {
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
+    fetch(`${BASE_URL}/v1/Producto`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

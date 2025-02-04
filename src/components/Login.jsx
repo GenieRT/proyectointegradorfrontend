@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/authSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+
+import BASE_URL from "../apiConfig";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // Para almacenar el email del usuario
@@ -11,6 +13,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false); 
   const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
  //limpiar mensajes
   //----------------------------------------------------------------------------
@@ -18,7 +21,7 @@ const Login = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+    }, 10000); // Los mensajes desaparecerán después de 3 segundos
   }
 //----------------------------------------------------------------------------------
 
@@ -31,7 +34,7 @@ const Login = () => {
  
 
     try {
-      const response = await fetch("https://isusawebapi.azurewebsites.net/api/Usuario/IniciarSesion", {
+      const response = await fetch(`${BASE_URL}/Usuario/IniciarSesion`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,12 +42,15 @@ const Login = () => {
         body: JSON.stringify({ email, pass: password }), // Enviar email y contraseña
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Credenciales inválidas o error del servidor.");
-        
+        // Si no es una respuesta válida, lanza un error con el mensaje del backend
+        const errorMessage = data.message || "Credenciales inválidas o error del servidor.";
+        throw new Error(errorMessage);
       }
 
-      const data = await response.json(); // Respuesta del backend (esperamos un token y usuario)
+
       //dispatch(setToken(data.token)); // Guardar el token en el slice de Redux
       //dispatch(setToken({ token: data.token, role: data.role }));
       dispatch(
@@ -59,9 +65,8 @@ const Login = () => {
       limpiarMensajes();
       setError(null);
       console.log("Usuario autenticado:", data);
+      navigate("/productos");
 
-      // Redirigir al usuario a otra página (ejemplo: Dashboard)
-      // window.location.href = "/dashboard";
     } catch (error) {
       console.error("Error al iniciar sesión:", error.message);
       setError(error.message); // Mostrar el error al usuario

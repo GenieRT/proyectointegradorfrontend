@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../apiConfig';
+import '../styles/Message.css';
 
 const ReservasProximaSemana = () => {
   const [reservas, setReservas] = useState([]);
@@ -10,16 +12,16 @@ const ReservasProximaSemana = () => {
 
   //limpiar mensajes
   //----------------------------------------------------------------------------
-  const limpiarMensajes = () => {
+ /* const limpiarMensajes = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
     }, 3000); // Los mensajes desaparecerán después de 3 segundos
-  }
+  } */
 //----------------------------------------------------------------------------------
 
   useEffect(() => {
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Reserva/ReservasSemanaProxima', {
+    fetch(`${BASE_URL}/v1/Reserva/ReservasSemanaProxima`, {
       // method: 'GET',
        headers: {
          "Authorization": `Bearer ${token}`,
@@ -37,8 +39,8 @@ const ReservasProximaSemana = () => {
       })
       .catch((error) => {
         console.error('Error al obtener las reservas:', error);
-        setError('No se pudieron cargar las reservas. Intente nuevamente más tarde.');
-        limpiarMensajes();
+        setError('No hay reservas disponibles. Intente nuevamente más tarde.');
+        //limpiarMensajes();
       })
       .finally(() => {
         setLoading(false);
@@ -50,7 +52,7 @@ const ReservasProximaSemana = () => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (

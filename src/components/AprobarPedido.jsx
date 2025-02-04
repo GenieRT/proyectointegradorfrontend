@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/AprobarPedido.css";
+import BASE_URL from "../apiConfig";
 
 const AprobarPedido = () => {
   const [pedidoId, setPedidoId] = useState(""); // Para almacenar el ID del pedido seleccionado
@@ -16,7 +17,7 @@ const AprobarPedido = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+    }, 15000); // Los mensajes desaparecerán después de 20 seg
   }
 //----------------------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ const AprobarPedido = () => {
   useEffect(() => {
     const fetchPedidosPendientes = async () => {
       try {
-        const response = await fetch("https://isusawebapi.azurewebsites.net/api/v1/Pedido/PedidosPendientes", {
+        const response = await fetch(`${BASE_URL}/v1/Pedido/PedidosPendientes`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`, 
           },
@@ -35,13 +36,14 @@ const AprobarPedido = () => {
 
         if (!response.ok) {
           const errorData = await response.json(); // Lee la respuesta JSON del error
+          console.error("Respuesta de error del backend:", error);
           throw new Error(errorData.message || "Error desconocido"); // Captura el mensaje del backend
         }
   
         const data = await response.json();
         setPedidos(data); // Actualiza la lista de pedidos pendientes
       } catch (error) {
-        console.error("Error al obtener los pedidos pendientes:", error.message);
+        console.error("Error:", error.message);
         setError(error.message); // Muestra el mensaje específico del backend
         limpiarMensajes();
       }
@@ -57,7 +59,7 @@ const AprobarPedido = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`https://isusawebapi.azurewebsites.net/api/v1/Pedido/AprobarPedido?pedidoId=${pedidoId}`, {
+      const response = await fetch(`${BASE_URL}/v1/Pedido/AprobarPedido?pedidoId=${pedidoId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +75,12 @@ const AprobarPedido = () => {
 
       setSuccessMessage("Pedido aprobado con éxito.");
       limpiarMensajes();
-      setPedidoId(""); 
+
+      console.log("Pedidos antes del filtro:", pedidos);
+      setPedidos((prevPedidos) => prevPedidos.filter((pedido) => pedido.id !== parseInt(pedidoId, 10)));
+      console.log("Pedidos después del filtro:", pedidos);
+      setPedidoId(""); // Limpiar el pedido seleccionado
+
     } catch (error) {
       console.error("Error al aprobar pedido:", error.message);
       setError(error.message);

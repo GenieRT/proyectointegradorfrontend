@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../apiConfig';
 
 const RegistrarPedido = () => {
   const [productos, setProductos] = useState([]); // Productos obtenidos de la API
@@ -19,13 +20,13 @@ const RegistrarPedido = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 5 segundos
+    }, 5000); // Los mensajes desaparecerán después de 5 segundos
   }
 //----------------------------------------------------------------------------------
 
   // Obtener productos y presentaciones al cargar el componente
   useEffect(() => {
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Producto', {
+    fetch(`${BASE_URL}/v1/Producto`, {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -35,7 +36,7 @@ const RegistrarPedido = () => {
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener productos:', error));
 
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Presentacion', {
+    fetch(`${BASE_URL}/v1/Presentacion`, {
      // method: 'GET',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -54,6 +55,12 @@ const RegistrarPedido = () => {
     if (!nuevoProducto.productoId || !nuevoProducto.presentacionId || !nuevoProducto.cantidad) {
       setError('Por favor complete todos los campos antes de agregar el producto.');
      limpiarMensajes();
+      return;
+    }
+
+    if (parseFloat(nuevoProducto.cantidad) <= 0) {
+      setError('La cantidad debe ser un número positivo mayor a 0.');
+      limpiarMensajes();
       return;
     }
 
@@ -86,7 +93,7 @@ const RegistrarPedido = () => {
       clienteId,
     };
 
-    fetch('https://isusawebapi.azurewebsites.net/api/v1/Pedido', {
+    fetch(`${BASE_URL}/v1/Pedido`, {
       method: 'POST',
       body: JSON.stringify(pedido),
       headers: { 

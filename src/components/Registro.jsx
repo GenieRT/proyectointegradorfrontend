@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Registro.css";
+import BASE_URL from "../apiConfig";
 
 const Registro = () => {
   const [email, setEmail] = useState("");
@@ -16,12 +17,12 @@ const Registro = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+    }, 10000); // Los mensajes desaparecerán después de 3 segundos
   }
 //----------------------------------------------------------------------------------
 
 
-  const handleRegistro = (e) => {
+  const handleRegistro = async (e) => {
     e.preventDefault();
 
     // Validar que las contraseñas coincidan
@@ -31,35 +32,35 @@ const Registro = () => {
         return;
     }
 
-    fetch("https://isusawebapi.azurewebsites.net/api/Usuario/ActualizarContraseña", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, NuevaContraseña: password }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((error) => {
-            throw new Error(error.mensaje || "Error en el registro");
-        });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Registro exitoso:", data);
-        setSuccessMessage("Registro exitoso. Por favor, revise su correo para confirmar su contraseña.");
-        setError("");
-        limpiarMensajes();
-        setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
-      })
-      .catch((error) => {
-        console.error("Error:", error.message);
-        setError(error.message);
-        setSuccessMessage("");
-        limpiarMensajes();
+    try {
+      const response = await fetch(`${BASE_URL}/Usuario/ActualizarContraseña`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, NuevaContraseña: password }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error en el registro");
+      }
+
+      const data = await response.json();
+      console.log("Registro exitoso:", data);
+
+      setSuccessMessage(data.mensaje || "Registro exitoso. Revisa tu correo para confirmar la contraseña.");
+      setError("");
+      limpiarMensajes();
+      setTimeout(() => navigate("/login"), 5000); // Redirigir al login después de 5 segundos
+    } catch (error) {
+      console.error("Error:", error.message);
+      setError(error.message);
+      setSuccessMessage("");
+      limpiarMensajes();
+    }
   };
+
 
   return (
     <div className="registro-container">

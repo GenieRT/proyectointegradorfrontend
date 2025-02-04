@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registrarTurno } from '../features/turnoSlice';
+import BASE_URL from '../apiConfig';
+import '../styles/Message.css';
 
 const TurnodeCarga = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const TurnodeCarga = () => {
     setTimeout(() => {
       setError(null);
       setSuccessMessage("");
-    }, 3000); // Los mensajes desaparecerán después de 3 segundos
+    }, 5000); // Los mensajes desaparecerán después de 3 segundos
   }
 //----------------------------------------------------------------------------------
 
@@ -60,7 +62,7 @@ const TurnodeCarga = () => {
     try {
       console.log('Enviando datos al backend:', turno);
 
-      const response = await fetch('https://isusawebapi.azurewebsites.net/api/v1/TurnosCarga', {
+      const response = await fetch(`${BASE_URL}/v1/TurnosCarga`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
