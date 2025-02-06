@@ -36,6 +36,7 @@ const ProductosTabla = () => {
   return (
     <div>
       <h2>Listado de Productos</h2>
+      {productos.length > 0 ? (
       <table border="1" style={{ width: '100%', textAlign: 'left' }}>
         <thead>
           <tr>
@@ -54,6 +55,9 @@ const ProductosTabla = () => {
           ))}
         </tbody>
       </table>
+      ): (
+        <p>No hay productos disponibles</p>
+      )}
     </div>
   );
 };

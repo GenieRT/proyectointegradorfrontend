@@ -23,8 +23,7 @@ function App() {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log("isAuthenticated:", isAuthenticated);
-  console.log("role:", role);
+
 
   const handleLogout = () => {
     dispatch(logout());
@@ -101,12 +100,7 @@ function App() {
             {/* Rutas públicas */}
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
-            <Route path="/registrarPedido" element={<RegistrarPedido />} />
-            <Route path="/aprobarPedido" element={<AprobarPedido />} />
-            <Route path="/registrarReserva" element={<RegistroReserva pedidoId={2} clienteId={1} />} />
-            <Route path="/productos" element={<ListaProductos />} />
-            <Route path="/reservasProxSemana" element={<ReservasProximaSemana/>}/>
-            <Route path="/turnoDeCarga" element={<TurnodeCarga/>}/>
+           
 
 
             {/* Rutas compartidas para Cliente y Empleado */}
