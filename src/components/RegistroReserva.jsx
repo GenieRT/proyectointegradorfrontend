@@ -115,7 +115,7 @@ const RegistroReserva = () => {
 
   const handleAddLineaReserva = (productoId, cantidadReservada) => {
     if (productoReservadoId && productoReservadoId !== productoId) {
-      alert("Solo se puede reservar un producto por pedido.");
+      
       return;
     }
 

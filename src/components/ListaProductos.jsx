@@ -29,7 +29,7 @@ const ProductosTabla = () => {
         dispatch(setProductos(data)); // Guardamos los productos en el estado
       })
       .catch((error) => {
-        console.error('Error al obtener los productos', error);
+        
       });
   }, [dispatch, token]);
 

@@ -60,7 +60,7 @@ const TurnodeCarga = () => {
     };
 
     try {
-      console.log('Enviando datos al backend:', turno);
+      
 
       const response = await fetch(`${BASE_URL}/v1/TurnosCarga`, {
         method: 'POST',
@@ -72,15 +72,16 @@ const TurnodeCarga = () => {
         body: JSON.stringify(turno),
       });
 
-      console.log('Estado de la respuesta:', response.status);
+     
 
       if (!response.ok) {
+    
         const errorText = await response.text();
         throw new Error(`Error en el servidor: ${errorText}`);
       }
 
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
+      
 
       dispatch(registrarTurno(data));
       setSuccessMessage("Registro de turno exitoso.");
@@ -89,7 +90,9 @@ const TurnodeCarga = () => {
       setFecha2('');
       setToneladas('');
     } catch (error) {
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      console.error("Mensjae del error:", error.message);
+      setError(error.message); // Mostrar el error al usuario
+      limpiarMensajes();
     }
   };
 

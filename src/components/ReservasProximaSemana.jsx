@@ -58,6 +58,7 @@ const ReservasProximaSemana = () => {
   return (
     <div>
       <h2>Reservas de la próxima semana</h2>
+      {reservas.length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -83,6 +84,7 @@ const ReservasProximaSemana = () => {
           ))}
         </tbody>
       </table>
+      ) :( <p>No hay reservas disponibles.</p>)}
     </div>
   );
 };

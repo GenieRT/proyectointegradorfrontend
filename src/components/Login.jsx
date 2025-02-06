@@ -64,7 +64,7 @@ const Login = () => {
       setSuccessMessage("Inicio de sesión exitoso.");
       limpiarMensajes();
       setError(null);
-      console.log("Usuario autenticado:", data);
+      
       navigate("/productos");
 
     } catch (error) {

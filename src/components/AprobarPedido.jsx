@@ -36,14 +36,14 @@ const AprobarPedido = () => {
 
         if (!response.ok) {
           const errorData = await response.json(); // Lee la respuesta JSON del error
-          console.error("Respuesta de error del backend:", error);
+         
           throw new Error(errorData.message || "Error desconocido"); // Captura el mensaje del backend
         }
   
         const data = await response.json();
         setPedidos(data); // Actualiza la lista de pedidos pendientes
       } catch (error) {
-        console.error("Error:", error.message);
+       
         setError(error.message); // Muestra el mensaje específico del backend
         limpiarMensajes();
       }
@@ -69,20 +69,20 @@ const AprobarPedido = () => {
 
       if (!response.ok) {
         const error = await response.json();
-        console.error("Error:", error);
+        
         throw new Error(error.message || "Error desconocido");
       }
 
       setSuccessMessage("Pedido aprobado con éxito.");
       limpiarMensajes();
 
-      console.log("Pedidos antes del filtro:", pedidos);
+     
       setPedidos((prevPedidos) => prevPedidos.filter((pedido) => pedido.id !== parseInt(pedidoId, 10)));
-      console.log("Pedidos después del filtro:", pedidos);
+      
       setPedidoId(""); // Limpiar el pedido seleccionado
 
     } catch (error) {
-      console.error("Error al aprobar pedido:", error.message);
+    
       setError(error.message);
       limpiarMensajes();
     } finally {

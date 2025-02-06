@@ -47,7 +47,7 @@ const Registro = () => {
       }
 
       const data = await response.json();
-      console.log("Registro exitoso:", data);
+      
 
       setSuccessMessage(data.mensaje || "Registro exitoso. Revisa tu correo para confirmar la contraseña.");
       setError("");
