@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BASE_URL from '../apiConfig';
+import "../styles/RegistroPedido.css"
 
 const RegistrarPedido = () => {
   const [productos, setProductos] = useState([]); // Productos obtenidos de la API
@@ -134,7 +135,7 @@ const RegistrarPedido = () => {
                     value={nuevoProducto.productoId}
                     onChange={(e) => handleNuevoProductoChange('productoId', e.target.value)}
                   >
-                    <option value="">Seleccione un producto</option>
+                    <option className='option' value="">Seleccione un producto</option>
                     {productos.map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.descripcion}

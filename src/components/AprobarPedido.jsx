@@ -105,7 +105,7 @@ const AprobarPedido = () => {
             <option value="">-- Seleccione un pedido --</option>
             {pedidos.map((pedido) => (
               <option key={pedido.id} value={pedido.id}>
-                {`ID: ${pedido.id} | Estado: ${pedido.estado} | Fecha: ${pedido.fecha} | ID Cliente: ${pedido.clienteId}`}              </option>
+                {`ID: ${pedido.id} | Estado: ${pedido.estado} | Fecha: ${new Date(pedido.fecha).toLocaleDateString()} | ID Cliente: ${pedido.clienteId}`}              </option>
             ))}
           </select>
         </div>

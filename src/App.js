@@ -15,7 +15,7 @@ import ReservasProximaSemana from "./components/ReservasProximaSemana";
 import TurnodeCarga from "./components/TurnodeCarga";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import logo from './img/unnamed.png';
-
+import { Navigate } from "react-router-dom";
 
 function App() {
   document.title = "ISUSA";
@@ -31,11 +31,11 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router><body className="app-body">
       <div className="App">
         <header className="App-header">
           <h1>Gestión de Pedidos ISUSA</h1>
-          <img src={logo} alt="Logo ISUSA" className="logo" />
+          
           {/* Barra de navegación */}
           <nav>
             <ul style={{ display: "flex", gap: "10px", listStyle: "none" }}>
@@ -94,10 +94,14 @@ function App() {
               )}
             </ul>
           </nav>
+          <img src={logo} alt="Logo ISUSA" className="logo" />
         </header>
         <main>
+       
         <Routes>
+     
             {/* Rutas públicas */}
+            <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
            
@@ -124,7 +128,8 @@ function App() {
             </Route>
           </Routes>
         </main>
-      </div>
+      </div></body>
+
     </Router>
   );
 }

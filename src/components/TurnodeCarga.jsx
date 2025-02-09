@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { registrarTurno } from '../features/turnoSlice';
 import BASE_URL from '../apiConfig';
 import '../styles/Message.css';
+import "../styles/TablasYFormularios.css"
 
 const TurnodeCarga = () => {
   const dispatch = useDispatch();
@@ -97,12 +98,13 @@ const TurnodeCarga = () => {
   };
 
   return (
+    <div className='container'>
     <form>
-      <h2>Registrar Turno de Carga</h2>
+      <h2 className='title' >Registrar Turno de Carga</h2>
 
       {/* Campo de Fecha */}
       <label>
-        Fecha de Inicio de Semana:
+        Fecha de inicio de Semana:
         <input
           type="date"
           value={fechaInicioSemana}
@@ -114,7 +116,7 @@ const TurnodeCarga = () => {
 
       {/* Campo de Fecha2 */}
       <label>
-        Fecha de Fin dd Semana:
+        Fecha de fin de Semana:
         <input
           type="date"
           value={fechaFinSemana}
@@ -143,6 +145,7 @@ const TurnodeCarga = () => {
         Registrar turno
       </button>
     </form>
+    </div>
   );
 };
 

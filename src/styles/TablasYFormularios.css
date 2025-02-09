@@ -1,0 +1,46 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .table th, 
+  .table td {
+    padding: 10px;
+    border: 1px solid  #00925d;
+  }
+  
+  .table th {
+    background-color:  #00925d;
+    color: white;
+    text-align: left;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .noProductos {
+    text-align: center;
+    font-size: 18px;
+    color: #7aa58b;
+    margin-top: 20px;
+  }
+  

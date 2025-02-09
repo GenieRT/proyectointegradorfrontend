@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../apiConfig";
+import "../styles/TablasYFormularios.css"
 
 const ListarPedidosYReservas = () => {
   const { token, clienteId } = useSelector((state) => state.auth); // Obtener token y clienteId
@@ -71,14 +72,14 @@ const limpiarMensajes = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h2>Pedidos y Reservas</h2>
+    <div >
+      <h2 className="title">Pedidos y Reservas</h2>
 
       {/* Mostrar Pedidos */}
-      <section>
+      <section className="container">
         <h3>Pedidos</h3>
         {pedidos.length > 0 ? (
-          <table border="1">
+          <table className="table" border="1">
             <thead>
               <tr>
                 <th>ID Pedido</th>
@@ -147,17 +148,17 @@ const limpiarMensajes = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table >
         ) : (
-          <p>No hay pedidos disponibles.</p>
+          <p  className="noProductos">No hay pedidos disponibles.</p>
         )}
       </section>
 
       {/* Mostrar Reservas */}
-      <section style={{ marginTop: "20px" }}>
-        <h3>Reservas</h3>
+      <section className="container"style={{ marginTop: "20px" }}>
+        <h3 className="title">Reservas</h3>
         {reservas.length > 0 ? (
-          <table border="1">
+          <table className="table" border="1">
             <thead>
               <tr>
                 <th>ID Reserva</th>
@@ -187,7 +188,7 @@ const limpiarMensajes = () => {
                         ))}
                       </ul>
                     ) : (
-                      "No hay productos reservados"
+                     <p className="noProductos">"No hay productos reservados"</p> 
                     )}
                   </td>
                 </tr>
@@ -195,7 +196,7 @@ const limpiarMensajes = () => {
             </tbody>
           </table>
         ) : (
-          <p>No hay reservas disponibles.</p>
+          <p className="noProductos">No hay reservas disponibles.</p>
         )}
       </section>
     </div>

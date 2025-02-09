@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BASE_URL from '../apiConfig';
 import '../styles/Message.css';
-
+import "../styles/TablasYFormularios.css"
 const ReservasProximaSemana = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,10 +56,10 @@ const ReservasProximaSemana = () => {
   }
 
   return (
-    <div>
-      <h2>Reservas de la próxima semana</h2>
+    <div className="container">
+      <h2 className="title">Reservas de la próxima semana</h2>
       {reservas.length > 0 ? (
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Producto</th>
@@ -84,7 +84,7 @@ const ReservasProximaSemana = () => {
           ))}
         </tbody>
       </table>
-      ) :( <p>No hay reservas disponibles.</p>)}
+      ) :( <p className="noProductos">No hay reservas disponibles.</p>)}
     </div>
   );
 };

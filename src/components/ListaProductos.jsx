@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductos } from '../features/productoSlice';
 import BASE_URL from "../apiConfig";
+import "../styles/TablasYFormularios.css"
 
 
 const ProductosTabla = () => {
@@ -34,10 +35,10 @@ const ProductosTabla = () => {
   }, [dispatch, token]);
 
   return (
-    <div>
-      <h2>Listado de Productos</h2>
+    <div className="container">
+      <h2 className="title">Listado de Productos</h2>
       {productos.length > 0 ? (
-      <table border="1" style={{ width: '100%', textAlign: 'left' }}>
+      <table className="table" border="1" style={{ width: '100%', textAlign: 'left' }}>
         <thead>
           <tr>
             <th>Descripción</th>
@@ -56,7 +57,7 @@ const ProductosTabla = () => {
         </tbody>
       </table>
       ): (
-        <p>No hay productos disponibles</p>
+        <p className="noProductos">No hay productos disponibles</p>
       )}
     </div>
   );

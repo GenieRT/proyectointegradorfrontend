@@ -77,7 +77,9 @@ const Login = () => {
   };
 
   return (
+
     <div className="login-container">
+      <h1>Bienvenido/a</h1>
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
